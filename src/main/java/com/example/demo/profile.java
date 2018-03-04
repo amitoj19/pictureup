@@ -21,6 +21,13 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 @Controller
 public class profile 
 {
+	
+		@Value("#{environment.key}")
+		String key;
+		@Value("#{environment.password}")
+		String password;
+
+	
 	@GetMapping(value="/")
 	public ModelAndView renderPage()
 	{
@@ -37,7 +44,7 @@ public class profile
 	{
 		
 		ModelAndView upload = new ModelAndView();
-		BasicAWSCredentials cred = new BasicAWSCredentials("AKIAIOOUPUME2UCHM2BQ","pCqA+eSZRsMDDgFhBUFoCeVgFRTHOggpkVPgMuJR");
+		BasicAWSCredentials cred = new BasicAWSCredentials(key,password);
 		AmazonS3 s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(cred))
 				.withRegion(Regions.US_EAST_2)
 				.build();
